@@ -14,12 +14,12 @@ class CircuitGraph:
     def __init__(self):
         self.nodes = {}
         self.inputs = []
-        self.output = []
+        self.outputs = []
     
     def add_or_create_node(self, name, type = None):
-        if self.name not in self.nodes:
+        if name not in self.nodes:
             self.nodes[name] = Node(name, type)
-        return self.nodes
+        return self.nodes[name]
     
 GATE_DELAYS = {
     "INPUT": 0.0,
