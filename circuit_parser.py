@@ -53,12 +53,12 @@ class CircuitParser:
             raise ValueError(f"The format of {line} is unknown")
             
         return self.graph
-
+"""
 parser = CircuitParser()
 graph = parser.parsing_process("simple_circuit.txt")
 node = graph.nodes.get("n2")
 print(node.delay)
-"""print(graph.inputs)
+print(graph.inputs)
 print(graph.outputs)
 print(node.successor)
 print(node)
