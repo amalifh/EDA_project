@@ -1,0 +1,17 @@
+# Simple circuit example
+
+# Inputs
+INPUT a
+INPUT b
+INPUT c
+
+# Gates
+n1 = AND(a, b)
+n2 = OR(n1, c)
+n3 = NOT(a)
+
+# Output
+OUTPUT n2
+
+
+

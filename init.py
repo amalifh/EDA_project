@@ -4,8 +4,8 @@ class Node:
         self.type = type
         self.delay = delay
         
-        nodesBefore = []
-        nodesNext = []
+        self.predecessors = []
+        self.successors = []
 
     def __repr__(self):
         return (f'Node({self.name}, type = {self.type})')
