@@ -3,7 +3,7 @@ import init
 import timing
 import circuit_parser as cp
 import aiger
-import networkx as nx
+
 
 filename = "./benchmarks/arithmetic/sqrt.aig"
 clk = 7

@@ -58,18 +58,13 @@ class CircuitParser:
             node.delay = init.GATE_DELAYS.get("INPUT")
             self.graph.inputs.append(node.name)
         
-        for lit in outputs:
+        for lit in outputs: #output is a pointer 
             base = lit & ~1
             inversion = lit & 1
 
             base_node = self.graph.add_or_create_node(base)
             out_name = f"OUT_{base}"
-            output_node = self.graph.add_or_create_node(out_name, "OUPUT")
-            output_node.delay = init.GATE_DELAYS.get("OUTPUT")
-
-            base_node.successors.append(out_name)
-            output_node.predecessors.append((base,inversion))
-            self.graph.outputs.append(out_name)
+            
 
         for out_lit, A, B in and_gates:
 
