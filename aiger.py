@@ -45,12 +45,14 @@ class CircuitParser:
 
             and_gates = []
             for i in range(A):
-                output_literal = 2*(I+L+i)+2
+                output_literal = 2*(I+L+i) +2
                 dA = self.read_varint(file)
                 dB = self.read_varint(file)
-                A = output_literal + dA
-                B = A + dB
+                A = output_literal - dA
+                B = A - dB
                 and_gates.append((output_literal, A, B))
+                if i < 10:
+                    print(f'gate {i}, output {output_literal}, {dA} {dB} {A} {B}')
     
 
         for i in range(I):

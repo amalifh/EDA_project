@@ -16,7 +16,7 @@ arrivals = timing.arrival_time(graph, toposort)
 requireds = timing.required_time(graph, toposort, clk)
 slack = timing.slack(requireds, arrivals)
 critical_path, critical_path_delay = timing.critical_path(graph, arrivals)
-
+test = 0
 
 
 if __name__ == "__main__":
@@ -25,7 +25,11 @@ if __name__ == "__main__":
     print(f"Total inputs: {len(graph.inputs)}")
     print(f"Total outputs: {len(graph.outputs)}")
     print(f"Worst slack {min(slack.values())} for node {min(slack, key=slack.get)}")
-    print(f"Critical path {'->'.join(map(str, critical_path))}")
+    #print(f"Critical path {'->'.join(map(str, critical_path))}")
+    for name,node in graph.nodes.items():
+        if not node.predecessors:
+            test += 1
+    print(test)
 
 
     

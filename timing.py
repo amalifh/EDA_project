@@ -24,8 +24,8 @@ def arrival_time(graph : init.CircuitGraph, topological_order):
 def required_time(graph : init.CircuitGraph, topological_order, clock_period):
     required = {name : float('inf') for name in graph.nodes}
 
-    for name, node, inv in graph.outputs:
-        required[node] = clock_period
+    for _, node_name, _ in graph.outputs:
+        required[node_name] = clock_period
 
     for name in reversed(topological_order):
         node = graph.nodes.get(name)
@@ -48,36 +48,36 @@ def slack(required, arrival):
 
 
 def critical_path(graph : init.CircuitGraph, arrivals):
-    max_time = 0
+    max_time = -1
     max_output = None
     total_delay = 0
-    for name, node, inv in graph.outputs:
-        arr_time = arrivals[node]
+    for _, node_name, _ in graph.outputs:
+        arr_time = arrivals[node_name]
         if arr_time > max_time:
-            max_output = node
+            max_output = node_name
             max_time = arr_time
+        
     path = [max_output]
     current_node = graph.nodes.get(max_output)
 
     while current_node.predecessors:
         max_pred = None
-        curr_max_time = 0
+        curr_max_time = -1
 
-        for name, inv in current_node.predecessors:
-            time = arrivals[name]
+        for pred_name, _ in current_node.predecessors:
+            time = arrivals[pred_name]
             if time > curr_max_time:
                 curr_max_time = time
-                max_pred = node
+                max_pred = pred_name
 
         if max_pred is None:
             break
-        current_node = graph.nodes.get(max_pred)
+        
         path.append(max_pred)
-
-    for node in path:
-        n = graph.nodes.get(node)
-        total_delay += n.delay
-    return list(reversed(path)), total_delay
+        current_node = graph.nodes.get(max_pred)
+    path.reverse()
+    total_delay = sum(graph.nodes[n].delay for n in path)
+    return path, total_delay
 """
 parser = cp.CircuitParser()
 graph = parser.parsing_process("simple_circuit.txt")
