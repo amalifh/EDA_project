@@ -11,7 +11,7 @@ parser = aiger.CircuitParser()
 graph = parser.processing_aig(filename)
 
 
-toposort = topo.toposort_Kahn(graph)
+#toposort = topo.toposort_Kahn(graph)
 #arrivals = timing.arrival_time(graph, toposort)
 #requireds = timing.required_time(graph, toposort, clk)
 #slack = timing.slack(requireds, arrivals)
@@ -23,13 +23,13 @@ if __name__ == "__main__":
     analysis = {}
     analysis["Inputs"] = graph.inputs
     analysis["Outputs"] = graph.outputs
-    analysis["Sorted topological order"] = toposort
+    #analysis["Sorted topological order"] = toposort
    # analysis["Time slacks"] = slack
    # analysis["Critical path"] = critical_path
     #analysis["Total delay of critical path"] = critical_path_delay
-    print(graph.inputs)
+    #print(graph.inputs)
     print(graph.outputs)
-    print(toposort)
+
 
     for name,node in graph.nodes.items():
         print(name, node.predecessors, node.successors)

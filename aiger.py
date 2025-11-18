@@ -1,4 +1,5 @@
 import init
+
 #aig M I L O A
 #aig 24746 128 0 64 24618
 
@@ -31,7 +32,7 @@ class CircuitParser:
             if header[0] != "aig":
                 raise ValueError("The file is not binary AIG")
             
-            aig, M, I, L, O, A = header
+            _, M, I, L, O, A = header
             M, I, L, O, A = map(int, (M, I, L, O, A))
 
             #latches = []
@@ -44,7 +45,7 @@ class CircuitParser:
 
             and_gates = []
             for i in range(A):
-                output_literal = 2*(I+L+i+1)
+                output_literal = 2*(I+L+i)+2
                 dA = self.read_varint(file)
                 dB = self.read_varint(file)
                 A = output_literal + dA
@@ -54,33 +55,36 @@ class CircuitParser:
 
         for i in range(I):
             lit_input = 2*(i+1)
-            node = self.graph.add_or_create_node(lit_input, "INPUT")
+            base = lit_input >> 1
+            node = self.graph.add_or_create_node(base, "INPUT")
             node.delay = init.GATE_DELAYS.get("INPUT")
-            self.graph.inputs.append(node.name)
+            self.graph.inputs.append(node)
         
-        for lit in outputs: #output is a pointer 
-            base = lit & ~1
+        for i, lit in enumerate(outputs): #output is a pointer 
+            base = lit >> 1
             inversion = lit & 1
 
             base_node = self.graph.add_or_create_node(base)
-            out_name = f"OUT_{base}"
+            out_name = f"OUT_{i}"
+            self.graph.outputs.append((out_name,base_node,inversion))
+
             
 
         for out_lit, A, B in and_gates:
-
-            gate = self.graph.add_or_create_node(out_lit, "AND")
+            out_base = out_lit >> 1
+            gate = self.graph.add_or_create_node(out_base, "AND")
             gate.delay = init.GATE_DELAYS.get("AND")
 
-            A_base = A & ~1
+            A_base = A >> 1
             A_inv = A & 1
             node_A = self.graph.add_or_create_node(A_base)
 
-            B_base = B & ~1
+            B_base = B >> 1 
             B_inv = B & 1
             node_B = self.graph.add_or_create_node(B_base)
             
             gate.predecessors.append((A_base, A_inv))
             gate.predecessors.append((B_base, B_inv))
-            node_A.successors.append(out_lit)
-            node_B.successors.append(out_lit)
+            node_A.successors.append(gate)
+            node_B.successors.append(gate)
         return self.graph            
