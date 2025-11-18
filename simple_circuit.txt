@@ -1,17 +1,19 @@
-# Simple circuit example
-
-# Inputs
 INPUT a
 INPUT b
-INPUT c
+INPUT c_in
 
 # Gates
-n1 = AND(a, b)
-n2 = OR(n1, c)
-n3 = NOT(a)
+# Sum (S) Logic: S = (a XOR b) XOR c_in
+n1 = XOR(a, b)            
+n2 = XOR(n1, c_in)        
+
+# Carry-Out (c_out) Logic: c_out = (a AND b) OR (c_in AND (a XOR b))
+n3 = AND(a, b)            
+n4 = AND(c_in, n1)       
+n5 = OR(n3, n4)           
 
 # Output
+OUTPUT S 
 OUTPUT n2
-
-
-
+OUTPUT c_out 
+OUTPUT n5

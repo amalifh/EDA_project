@@ -24,10 +24,10 @@ class CircuitGraph:
 GATE_DELAYS = {
     "INPUT": 0.0,
     "OUTPUT": 0.0,
-    "AND": 1.0,
-    "OR": 1.0,
-    "NOT": 0.5,
+    "AND": 2.0,
+    "OR": 2.0,
+    "NOT": 1.0,
     "NAND": 1.2,
     "NOR": 1.2,
-    "XOR": 1.5
+    "XOR": 3.0
 }
