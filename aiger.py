@@ -66,7 +66,7 @@ class CircuitParser:
 
             base_node = self.graph.add_or_create_node(base)
             out_name = f"OUT_{i}"
-            self.graph.outputs.append((out_name,base_node,inversion))
+            self.graph.outputs.append((out_name,base_node.name,inversion))
 
             
 
@@ -83,8 +83,9 @@ class CircuitParser:
             B_inv = B & 1
             node_B = self.graph.add_or_create_node(B_base)
             
-            gate.predecessors.append((A_base, A_inv))
-            gate.predecessors.append((B_base, B_inv))
-            node_A.successors.append(gate)
-            node_B.successors.append(gate)
+            gate.predecessors.append((node_A.name, A_inv))
+            gate.predecessors.append((node_B.name, B_inv))
+
+            node_A.successors.append(gate.name)
+            node_B.successors.append(gate.name)
         return self.graph            

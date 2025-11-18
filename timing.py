@@ -12,7 +12,7 @@ def arrival_time(graph : init.CircuitGraph, topological_order):
             continue
 
         max_time = 0.0
-        for pred in node.predecessors:
+        for pred, inv in node.predecessors:
             a_time = arrivals.get(pred)
             if a_time > max_time:
                 max_time = a_time
@@ -24,8 +24,8 @@ def arrival_time(graph : init.CircuitGraph, topological_order):
 def required_time(graph : init.CircuitGraph, topological_order, clock_period):
     required = {name : float('inf') for name in graph.nodes}
 
-    for name in graph.outputs:
-        required[name] = clock_period
+    for name, node, inv in graph.outputs:
+        required[node] = clock_period
 
     for name in reversed(topological_order):
         node = graph.nodes.get(name)
@@ -51,10 +51,10 @@ def critical_path(graph : init.CircuitGraph, arrivals):
     max_time = 0
     max_output = None
     total_delay = 0
-    for name in graph.outputs:
-        arr_time = arrivals[name]
+    for name, node, inv in graph.outputs:
+        arr_time = arrivals[node]
         if arr_time > max_time:
-            max_output = name
+            max_output = node
             max_time = arr_time
     path = [max_output]
     current_node = graph.nodes.get(max_output)
@@ -63,11 +63,11 @@ def critical_path(graph : init.CircuitGraph, arrivals):
         max_pred = None
         curr_max_time = 0
 
-        for name in current_node.predecessors:
+        for name, inv in current_node.predecessors:
             time = arrivals[name]
             if time > curr_max_time:
                 curr_max_time = time
-                max_pred = name
+                max_pred = node
 
         if max_pred is None:
             break
