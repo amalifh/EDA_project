@@ -1,4 +1,3 @@
-import circuit_parser as cp
 import init
 
 def toposort_Kahn(graph : init.CircuitGraph):

@@ -2,20 +2,20 @@ import topological_sort as topo
 import init
 import timing
 import circuit_parser as cp
+import aiger
 import networkx as nx
 
-filename = "simple_circuit.txt"
+filename = "./benchmarks/arithmetic/sqrt.aig"
 clk = 7
-parser = cp.CircuitParser()
-graph = parser.parsing_process(filename)
+parser = aiger.CircuitParser()
+graph = parser.processing_aig(filename)
 
-graph_from_ABC = nx. DiGraph(nx.nx_pydot.read_dot("sqrt_optimized.blif"))
 
-toposort = topo.toposort_Kahn(graph_from_ABC)
-arrivals = timing.arrival_time(graph, toposort)
-requireds = timing.required_time(graph, toposort, clk)
-slack = timing.slack(requireds, arrivals)
-critical_path, critical_path_delay = timing.critical_path(graph, arrivals)
+toposort = topo.toposort_Kahn(graph)
+#arrivals = timing.arrival_time(graph, toposort)
+#requireds = timing.required_time(graph, toposort, clk)
+#slack = timing.slack(requireds, arrivals)
+#critical_path, critical_path_delay = timing.critical_path(graph, arrivals)
 
 
 
@@ -24,10 +24,21 @@ if __name__ == "__main__":
     analysis["Inputs"] = graph.inputs
     analysis["Outputs"] = graph.outputs
     analysis["Sorted topological order"] = toposort
-    analysis["Time slacks"] = slack
-    analysis["Critical path"] = critical_path
-    analysis["Total delay of critical path"] = critical_path_delay
+   # analysis["Time slacks"] = slack
+   # analysis["Critical path"] = critical_path
+    #analysis["Total delay of critical path"] = critical_path_delay
+    print(graph.inputs)
+    print(graph.outputs)
     print(toposort)
 
-"""    for element in analysis.items():
+    for name,node in graph.nodes.items():
+        print(name, node.predecessors, node.successors)
+        
+
+"""    for element in a nalysis.items():
         print(element)"""
+"""    pos = {node: i for i, node in enumerate(toposort)}
+    for name, node in graph.nodes.items():
+        for (pred, inv) in node.predecessors:
+            if pos[pred] > pos[name]:
+                print("Error")"""
