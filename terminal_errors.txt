@@ -1,0 +1,27 @@
+what is the ssue   
+
+(venv) amal@cristina-Vostro-3681:~/Documents/EDA_poroject/EDA_project$ /home/amal/Documents/EDA_poroject/EDA_project/venv/bin/python /home/amal/Documents/EDA_poroject/EDA_project/STA_generator.py
+
+.model top
+
+^
+
+Expected {'GRAPH' | 'DIGRAPH'}, found '.'  (at char 61), (line:2, col:1)
+
+Traceback (most recent call last):
+
+  File "/home/amal/Documents/EDA_poroject/EDA_project/STA_generator.py", line 12, in <module>
+
+    graph_from_ABC = nx. DiGraph(nx.nx_pydot.read_dot("sqrt_optimized.blif"))
+
+  File "<decorator-gen-746>", line 2, in read_dot
+
+  File "/home/amal/Documents/EDA_poroject/EDA_project/venv/lib/python3.6/site-packages/networkx/utils/decorators.py", line 239, in _open_file
+
+    result = func_to_be_decorated(*new_args, **kwargs)
+
+  File "/home/amal/Documents/EDA_poroject/EDA_project/venv/lib/python3.6/site-packages/networkx/drawing/nx_pydot.py", line 72, in read_dot
+
+    return from_pydot(P_list[0])
+
+TypeError: 'NoneType' object is not subscriptable
