@@ -20,7 +20,7 @@ class CircuitGraph:
         self.inputs = []
         self.outputs = []
     
-    def add_or_create_node(self, name, type = "AND"):
+    def add_or_create_node(self, name, type = None):
         if name not in self.nodes:
             self.nodes[name] = Node(name, type)
         return self.nodes[name]
