@@ -63,6 +63,7 @@ class CircuitParser:
             inversion = lit & 1
 
             node = self.graph.add_or_create_node(base)
+            node.successors.append("OUTPUT_" + lit)
             self.graph.outputs.append((node, inversion))
 
         for element in and_gates:
@@ -79,17 +80,6 @@ class CircuitParser:
             
             fanout.predecessors.append((node_A.name, A_inv))
             fanout.predecessors.append((node_B.name, B_inv))
-            
-        return self.graph
-
-            
-
-            
-            
-
-
-
-                               
-
-        
-            
+            node_A.successors.append(fanout.name)
+            node_B.successors.append(fanout.name)
+        return self.graph            
