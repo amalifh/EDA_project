@@ -7,6 +7,10 @@ class Node:
         self.predecessors = []
         self.successors = []
 
+        self.arrival_time = None
+        self.required_time = None
+        self.slack = None
+
     def __repr__(self):
         return (f'Node({self.name}, type = {self.type})')
     
@@ -16,7 +20,7 @@ class CircuitGraph:
         self.inputs = []
         self.outputs = []
     
-    def add_or_create_node(self, name, type = None):
+    def add_or_create_node(self, name, type = "AND"):
         if name not in self.nodes:
             self.nodes[name] = Node(name, type)
         return self.nodes[name]
