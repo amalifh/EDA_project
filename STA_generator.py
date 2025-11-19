@@ -6,7 +6,7 @@ import aiger
 
 
 filename = "./benchmarks/arithmetic/sqrt.aig"
-clk = 7
+clk = 12000
 parser = aiger.CircuitParser()
 graph = parser.processing_aig(filename)
 
@@ -26,19 +26,9 @@ if __name__ == "__main__":
     print(f"Total outputs: {len(graph.outputs)}")
     print(f"Worst slack {min(slack.values())} for node {min(slack, key=slack.get)}")
     #print(f"Critical path {'->'.join(map(str, critical_path))}")
+    print(f"Critical path delay: {critical_path_delay}")
     for name,node in graph.nodes.items():
         if not node.predecessors:
             test += 1
     print(test)
 
-
-    
-        
-
-"""    for element in a nalysis.items():
-        print(element)"""
-"""    pos = {node: i for i, node in enumerate(toposort)}
-    for name, node in graph.nodes.items():
-        for (pred, inv) in node.predecessors:
-            if pos[pred] > pos[name]:
-                print("Error")"""
