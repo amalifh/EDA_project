@@ -51,8 +51,8 @@ class CircuitParser:
                 A = output_literal - dA
                 B = A - dB
                 and_gates.append((output_literal, A, B))
-                if i < 10:
-                    print(f'gate {i}, output {output_literal}, {dA} {dB} {A} {B}')
+             #   if i < 10:
+              #      print(f'gate {i}, output {output_literal}, {dA} {dB} {A} {B}')
     
 
         for i in range(I):
