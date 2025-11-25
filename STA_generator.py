@@ -3,7 +3,7 @@ import timing
 import aiger
 
 
-filename = "./benchmarks/arithmetic/adder.aig"
+filename = "./benchmarks/arithmetic/sqrt.aig"
 clk = 10116
 parser = aiger.CircuitParser()
 graph = parser.processing_aig(filename)
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     print(f"Total inputs: {len(graph.inputs)}")
     print(f"Total outputs: {len(graph.outputs)}")
     print(f"Worst slack {min(slack.values())} for node {min(slack, key=slack.get)}")
-    print(f"Best slack: {max(slack.values())}")
+    print(f"Best slack: {max(slack.values())} for node {max(slack, key=slack.get)}")
     #print(f"Critical path {'->'.join(map(str, critical_path))}")
     print(f"Critical path delay: {critical_path_delay}")
 """    for name,node in graph.nodes.items():
