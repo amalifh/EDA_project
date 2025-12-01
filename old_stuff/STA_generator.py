@@ -3,14 +3,9 @@ import timing
 import aiger
 import critical_path
 
-<<<<<<< HEAD:old_stuff/STA_generator.py
+
 file = "sqrt.aig"
 clk = 5
-=======
-
-filename = "./benchmarks/arithmetic/sqrt.aig"
-clk = 10116
->>>>>>> fa202273d7c022339a89b3b134bbfd83859a9f39:STA_generator.py
 parser = aiger.CircuitParser()
 graph = parser.processing_aig(file)
 
@@ -27,14 +22,4 @@ if __name__ == "__main__":
     print(f"Total outputs: {len(graph.outputs)}")
     print(f"Worst slack {min(slack.values())} for node {min(slack, key=slack.get)}")
     print(f"Best slack: {max(slack.values())} for node {max(slack, key=slack.get)}")
-<<<<<<< HEAD:old_stuff/STA_generator.py
-    print(f"Critical path delay: {critical_path_delay}")
-=======
-    #print(f"Critical path {'->'.join(map(str, critical_path))}")
-    print(f"Critical path delay: {critical_path_delay}")
-"""    for name,node in graph.nodes.items():
-        if not node.predecessors:
-            test += 1
-    print(test)"""
 
->>>>>>> fa202273d7c022339a89b3b134bbfd83859a9f39:STA_generator.py
