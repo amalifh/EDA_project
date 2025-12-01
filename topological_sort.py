@@ -1,6 +1,7 @@
-import init
 
-def toposort_Kahn(graph : init.CircuitGraph):
+import timing_graph
+
+def toposort_Kahn(graph : timing_graph.TimingGraph):
     #first I have to calcute all indegree of each node
     indegree = {name : 0 for name in graph.nodes} #nodes is a dictionary
     queue = []
@@ -31,8 +32,3 @@ def toposort_Kahn(graph : init.CircuitGraph):
         
     return ordered
 
-
-
-        
-
-        

@@ -3,31 +3,43 @@ class Node:
         self.name = name
         self.type = type
         self.delay = delay
-        
+
         self.predecessors = []
         self.successors = []
 
-        self.arrival_time = None
-        self.required_time = None
-        self.slack = None
-
     def __repr__(self):
-        return (f'Node({self.name}, type = {self.type})')
+        return (f'Node({self.name}, type = {self.type}, delay = {self.delay})')
     
 class CircuitGraph:
     def __init__(self):
         self.nodes = {}
+        self.edges = {}
+    
         self.inputs = []
         self.outputs = []
     
-    def add_or_create_node(self, name, type = None):
-        if name not in self.nodes:
-            self.nodes[name] = Node(name, type)
+    def add_node(self, name, type = None, delay = 0.0):
+        
+        self.nodes[name] = Node(name, type, delay)
         return self.nodes[name]
-    
+
+    def add_edge(self, source, destination):
+        if source not in self.edges:
+            self.edges[source] = []
+            
+        self.edges[source].append(destination)
+
+        self.nodes[source].successors.append(destination)
+        self.nodes[destination].predecessors.append(source)
+
 GATE_DELAYS = {
     "INPUT": 0.0,
     "OUTPUT": 0.0,
-    "AND": 2.0,
-    "NOT": 1.0
+    "AND": 1.0,
+    "OR": 1.0,
+    "NOT": 0.5,
+    "NAND": 1.2,
+    "NOR": 1.2,
+    "XOR": 1.5,
+    "BUF": 0.0
 }

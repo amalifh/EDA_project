@@ -1,0 +1,14 @@
+INPUT a
+INPUT b
+INPUT c_in
+
+
+n1 = XOR(a, b)            
+n2 = XOR(n1, c_in)        
+
+n3 = AND(a, b)            
+n4 = AND(c_in, n1)       
+n5 = OR(n3, n4)           
+
+OUTPUT n2
+OUTPUT n5
