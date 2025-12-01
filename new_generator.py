@@ -5,7 +5,6 @@ import topological_sort as tp
 import graph_builder as gb
 import timing_builder as tb
 import critical_path
-import visualizer
 import visualize_graph
 
 file1 = "circuit_tests/circuit1.txt"
