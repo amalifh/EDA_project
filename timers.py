@@ -29,7 +29,7 @@ def required_time(graph : tg.TimingGraph, topological_order, clock_period):
         
         min_time = float('inf')
         for succ in node.successors:
-            req_time = required[succ] - node.delay
+            req_time = required[succ] - graph.nodes[succ].delay
             min_time = min(req_time, min_time)
 
         if node.successors:

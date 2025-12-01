@@ -1,17 +1,11 @@
-INPUT a1
-INPUT a2
-INPUT a3
-INPUT a4
+INPUT n1
 
-n1 = NAND(a1, a2)
-n2 = NOR(a3, a4)
-n3 = XOR(n1, n2)
-n4 = AND(a1, n3)
-n5 = OR(a2, n4)
-n6 = NOT(n5)
-n7 = XOR(n3, n6)
-n8 = AND(n6, n7)
+n2 = BUF(n1)
+n3 = BUF(n1)
 
+n4 = AND(n2,n3)
+n5= OR(n4, n2)
+n6 = AND(n4,n3)
 
-OUTPUT n7
-OUTPUT n8
+OUTPUT n5
+OUTPUT n6

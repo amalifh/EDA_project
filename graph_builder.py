@@ -8,7 +8,6 @@ class CircuitBuilder:
             name = entry.get("name")
             type = entry.get("type")
             
-            
             if type == 'INPUT':
                 delay = init.GATE_DELAYS.get(type)
                 self.graph.inputs.append(name)
@@ -17,8 +16,10 @@ class CircuitBuilder:
 
             if type == 'OUTPUT':
                 delay = init.GATE_DELAYS.get(type)
+
+                if not name in self.graph.nodes:
+                    self.graph.add_node(name, type, delay)
                 self.graph.outputs.append(name)
-                self.graph.add_node(name, type, delay)
                 continue
 
             if type == 'GATE':

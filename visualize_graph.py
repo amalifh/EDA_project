@@ -26,53 +26,6 @@ def compute_levels(tg, topo):
 
     return level
 
-def normalize_levels(level):
-    maxlvl = max(level.values())
-    for node in level:
-        # If node is an OUTPUT or TERMINAL, force maximum level
-        # (and preserve relative ordering)
-        pass
-
-def force_outputs_last_level(level, tg):
-    maxlvl = max(level.values())
-    for out in tg.endpoints:     # includes TERMINAL
-        level[out] = maxlvl
-    return level
-
-"""def level_layout(tg, topo):
-    # Compute raw levels
-    level = compute_levels(tg, topo)
-
-    # Force all outputs to the last level
-    maxlvl = max(level.values())
-    for out in tg.endpoints:
-        level[out] = maxlvl
-
-    # Group nodes by level
-    by_level = {}
-    for node, lvl in level.items():
-        by_level.setdefault(lvl, []).append(node)
-
-    # Sort nodes inside levels for stable layout
-    pos = {}
-    for lvl, nodes in by_level.items():
-        nodes = sorted(nodes)
-        for i, node in enumerate(nodes):
-            pos[node] = (lvl, -i)
-
-    return pos
-"""
-
-def sort_nodes_in_level(nodes, tg_edges, pred_index):
-    # score each node by average index of predecessors
-    def score(n):
-        preds = tg_edges.get(n, [])
-        if not preds:
-            return pred_index[n]
-        return sum(pred_index[p] for p in preds) / len(preds)
-
-    return sorted(nodes, key=score)
-
 
 def level_layout(tg, topo):
     level = compute_levels(tg, topo)
@@ -85,11 +38,11 @@ def level_layout(tg, topo):
     pos = {}
     for lvl, nodes in levels.items():
         for i, node in enumerate(nodes):
-            pos[node] = (lvl, -i)   # X = level, Y = index
+            pos[node] = (lvl, -i) 
     return pos
 
+
 def draw_timing_graph(nx_graph, pos):
-    # Color by type
     color_map = []
     for n in nx_graph.nodes:
         t = nx_graph.nodes[n]["type"]
@@ -118,4 +71,3 @@ def draw_timing_graph(nx_graph, pos):
         arrows=True
     )
     plt.show()
-

@@ -1,6 +1,6 @@
 import timing_graph as tg
 
-def critical_path(graph : tg.TimingGraph, arrivals):
+def critical_paths(graph : tg.TimingGraph, arrivals):
     max_time = 0
     max_output = None
     total_delay = 0
@@ -31,3 +31,27 @@ def critical_path(graph : tg.TimingGraph, arrivals):
         n = graph.nodes.get(node)
         total_delay += n.delay
     return list(reversed(path)), total_delay
+
+def critical_path(graph: tg.TimingGraph, arrivals):
+    # Step 1: Find endpoint with maximum arrival time
+    max_output = max(graph.endpoints, key=lambda n: arrivals[n])
+    path = [max_output]
+    current = max_output
+
+    # Step 2: Backtrack
+    while graph.nodes[current].predecessors:
+        preds = graph.nodes[current].predecessors
+
+        # pick predecessor whose arrival + its edge_delay = arrival[current]
+        def pred_score(p):
+            edge = graph.edges.get((p, current), 0)  # net delay if present
+            return arrivals[p] + edge
+
+        current = max(preds, key=pred_score)
+        path.append(current)
+
+    path.reverse()
+
+    # Step 3: critical path delay = arrivals[max_output]
+    total_delay = arrivals[max_output]
+    return path, total_delay
